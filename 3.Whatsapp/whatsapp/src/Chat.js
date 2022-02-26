@@ -7,25 +7,29 @@ import MoreVert from '@mui/icons-material/MoreVert'
 import MicIcon from '@mui/icons-material/Mic'
 import InsertEmoticon from "@mui/icons-material/InsertEmoticon";
 import { useState } from 'react'
-import axios from 'axios'
+import axios from './axios'
 
 
-function Chat({messages}) {
-const[input,setInput]=useState("");
-  
-const sendMessage=async(e)=>{
-  e.preventDefault();
+function Chat({ messages }) {
+  const [input, setInput] = useState("");
 
-  await axios.post('/messages/new',{
-    message:input,
-    name:"Demo",
-    timestamp:"anytime",
-    received:false,
-  });
+    const sendMessage = async (e) => {
+        e.preventDefault();
 
-setInput("");
+        await axios.post("/messages/new", {
+            "message": input,
+            "name": "Papa",
+            "timestamp": "This is timestamp",
+            "receiver": false
+        })
 
-};
+        setInput("");
+
+        console.log(input);
+    }
+
+
+
 
   return (
     <div className='chat'> 
@@ -64,17 +68,13 @@ setInput("");
           
       <div className='chat_footer'>
         <InsertEmoticon/>
-        <form >
-          <input 
-          value={input} 
-          onChange={(e)=>setInput(e.target.value)} 
-          placeholder="type a message"
-          type="text"
-          />
-          <button onClick={sendMessage} type="submit">
-            Send a message
-          </button>
-        </form>
+        <form
+                    value={input}
+                    onChange={e => setInput(e.target.value)}
+                >
+                    <input placeholder="Type a message" type="text" value={input}/>
+                    <button onClick={sendMessage} type="submit">Send a message</button>
+                </form>
         <MicIcon/>
       </div>
     </div>
